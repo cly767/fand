@@ -10,7 +10,7 @@ May support other Pis or even other SBCs if you hack it properly.
 
 - Manual control via named pipes
 - Real-time scheduling, allowing for stable responses even under high system loads
-- Tiny CPU & memory footprint tnanks to hardware PWM & C
+- Tiny CPU & memory footprint thanks to hardware PWM & C
 
 ## Installation
 
