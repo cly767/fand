@@ -1,0 +1,15 @@
+[Unit]
+Description=Raspberry Pi Fan Control
+
+[Service]
+Type=exec
+CPUSchedulingPolicy=fifo
+CPUSchedulingPriority=1
+SuccessExitStatus=0
+Restart=always
+KillMode=mixed
+KillSignal=SIGTERM
+ExecStart=/usr/local/bin/fand
+
+[Install]
+WantedBy=multi-user.target
