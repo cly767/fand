@@ -74,3 +74,7 @@ systemctl enable --now fand.service
 
 - **自动** *auto*：根据核心温度和风扇曲线计算占空比
 - **手动** *manual*：从 `fifo_path` 获取占空比。当 `fifo_path` 中有新数据时，`fand` 将会强制进入手动模式（也会进入**运行中**状态）
+
+## License
+
+MIT

@@ -76,3 +76,5 @@ Options explained:
 - **manual**: get the duty cycle from `fifo_path`. `fand` is forced into this mode (and implicitly the **running** state when there is new value arriving through `fifo_path`)
 
 ## License
+
+MIT
