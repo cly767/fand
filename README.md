@@ -14,7 +14,7 @@ May support other Pis or even other SBCs if you hack it properly.
 
 ## Installation
 
-First make sure you have the `WiringPi` library installed.
+First make sure you have the [`WiringPi`](https://github.com/WiringPi/WiringPi) library installed.
 
 ```
 git clone https://github.com/cly767/fand

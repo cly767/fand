@@ -14,7 +14,7 @@
 
 ## 安装
 
-首先安装 `WiringPi`。
+首先安装 [`WiringPi`](https://github.com/WiringPi/WiringPi)。
 
 ```
 git clone https://github.com/cly767/fand
