@@ -71,11 +71,11 @@ void init(void) {
 	main_pid = getpid();
 
 	main_scheduler = sched_getscheduler(0);
-	if(main_scheduler == -1)
+	if(main_scheduler == -1) {
 #ifdef DEBUG
-		fprintf(stderr, "unable to get scheduler for current process\n");
+		fprintf(stderr, "unable to get scheduler for current process\n")
 #endif
-	else if(main_scheduler != SCHED_FIFO && main_scheduler != SCHED_RR) {
+	} else if(main_scheduler != SCHED_FIFO && main_scheduler != SCHED_RR) {
 #ifdef DEBUG
 			fprintf(stderr, "trying to set current sched policy to SCHED_RR...\n");
 #endif
@@ -203,7 +203,7 @@ void get_temp(void) {
 	}
 	temp = atoi(buffer) / 1000.0;
 #ifdef DEBUG
-	fprintf(stderr, "temp = %.3lf\n", temp);
+	fprintf(stdout, "temp = %.3lf\n", temp);
 #endif
 	lseek(temp_fd, 0, SEEK_SET);
 	return;
@@ -235,7 +235,7 @@ void *listen_fifo(void *arg) {
 		pthread_setcancelstate(PTHREAD_CANCEL_DISABLE, NULL);
 		if(end != a) {
 #ifdef DEBUG
-			fprintf(stderr, "got manual dc value %d\n", n);
+			fprintf(stdout, "got manual dc value %d\n", n);
 #endif
 			// you may want to set dc_low to 0
 			if(n != 0 && n >= dc_low && n <= 100) {
@@ -248,7 +248,7 @@ void *listen_fifo(void *arg) {
 
 			} else {
 #ifdef DEBUG
-				fprintf(stderr, "out-of-range dc value, switching back to auto mode\n");
+				fprintf(stdout, "out-of-range dc value, switching back to auto mode\n");
 #endif
 				pthread_mutex_lock(&operation_mutex);
 				manual = 0;
@@ -259,7 +259,7 @@ void *listen_fifo(void *arg) {
 		}
 #ifdef DEBUG
 		else {
-			fprintf(stderr, "invalid input, fan state will not change\n");
+			fprintf(stdout, "invalid input, fan state will not change\n");
 		}
 #endif
 		// re-open for blocking input
@@ -300,7 +300,7 @@ void update_fan_dc(void) {
 
 #ifdef DEBUG
 	if(!manual)
-		fprintf(stderr, "calculated fan dc %d%%\n", dc);
+		fprintf(stdout, "calculated fan dc %d%%\n", dc);
 #endif
 
 #if HARD_PWM
@@ -328,13 +328,7 @@ void cleanup(void) {
 	fprintf(stderr, "cancelling thread\n");
 #endif
 	pthread_cancel(listen_fifo_thread);
-#ifdef DEBUG
-	fprintf(stderr, "joining thread\n");
-#endif
 	pthread_join(listen_fifo_thread, NULL);
-#ifdef DEBUG
-	fprintf(stderr, "exited from thread\n");
-#endif
 	pthread_mutex_destroy(&operation_mutex);
 
 #if !HARD_PWM
