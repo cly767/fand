@@ -9,7 +9,7 @@ May support other Pis or even other SBCs if you hack it properly.
 ## Features
 
 - Manual control via named pipes
-- Real-time scheduling, allowing for stable responses even under high system loads
+- By default, sets own scheduling policy to SCHED_RR, allowing for stable responses even under high system loads
 - Tiny CPU & memory footprint thanks to hardware PWM & C
 
 ## Installation

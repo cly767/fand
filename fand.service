@@ -3,7 +3,7 @@ Description=Raspberry Pi Fan Control
 
 [Service]
 Type=exec
-CPUSchedulingPolicy=fifo
+CPUSchedulingPolicy=rr
 CPUSchedulingPriority=1
 SuccessExitStatus=0
 Restart=always

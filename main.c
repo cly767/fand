@@ -66,16 +66,26 @@ int main(void) {
 
 void init(void) {
 	struct sigaction act = { };
+	struct sched_param param = { .sched_priority = 1 };
 
 	main_pid = getpid();
 
 	main_scheduler = sched_getscheduler(0);
-	if(main_scheduler == -1) {
+	if(main_scheduler == -1)
+#ifdef DEBUG
 		fprintf(stderr, "unable to get scheduler for current process\n");
-		exit(6);
+#endif
+	else if(main_scheduler != SCHED_FIFO && main_scheduler != SCHED_RR) {
+#ifdef DEBUG
+			fprintf(stderr, "trying to set current sched policy to SCHED_RR...\n");
+#endif
+			if(sched_setscheduler(0, SCHED_RR, &param) == -1) {
+#ifdef DEBUG
+					fprintf(stderr, "unable to set scheduler for current process\n");
+					fprintf(stderr, "SCHED_RR or SCHED_FIFO is recommended\n");
+#endif
+			}
 	}
-	if(main_scheduler != SCHED_FIFO && main_scheduler != SCHED_RR)
-		printf("SCHED_FIFO or SCHED_RR is recommended\n");
 
 	if((temp_fd = open(temp_path, O_RDONLY)) < 0) {
 		fprintf(stderr, "failed to open %s\n", temp_path);
@@ -164,7 +174,7 @@ enum states determine_state(void) {
 
 			switch (last_state) {
 				case idle:
-					if(interval * idle_cycle_count > idle_timeout)
+					if(interval * idle_cycle_count >= idle_timeout)
 						// we've been idle for too long; let the fan rest for a while
 						return stopped;
 				case running:
